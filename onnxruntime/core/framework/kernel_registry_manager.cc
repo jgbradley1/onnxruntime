@@ -77,11 +77,9 @@ Status KernelRegistryManager::SearchKernelRegistry(const onnxruntime::Node& node
   }
 
   Status status;
-  {
-    for (auto& registry : custom_kernel_registries_) {
-      status = registry->TryFindKernel(node, std::string(), kernel_create_info);
-      if (status.IsOK()) return status;
-    }
+  for (auto& registry : custom_kernel_registries_) {
+    status = registry->TryFindKernel(node, std::string(), kernel_create_info);
+    if (status.IsOK()) return status;
   }
 
   KernelRegistry* p = nullptr;
